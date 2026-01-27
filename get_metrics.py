@@ -14,25 +14,45 @@ def calculate_max_drawdown(prices):
     return drawdown.min()
 
 def calculate_sharpe_ratio(returns, risk_free_rate=0.01):
+    if isinstance(returns, pd.DataFrame):
+        returns = returns.iloc[:, 0]
+
     excess_returns = returns - risk_free_rate / 252
     std = excess_returns.std()
 
-    # if std is a Series, reduce to a single value
     if isinstance(std, pd.Series):
         std = std.mean()
 
-    if std == 0:
+    if std == 0 or not pd.isfinite(std):
         return 0.0
 
-    return (excess_returns.mean() / std) * (252 ** 0.5)
+    mean = excess_returns.mean()
+    if not pd.isfinite(mean):
+        return 0.0
+
+    return (mean / std) * (252 ** 0.5)
+
 
 
 def calculate_annualized_return(returns):
+    if isinstance(returns, pd.DataFrame):
+        returns = returns.iloc[:, 0]
+
     if len(returns) == 0:
         return 0.0
-    compounded_growth = (1 + returns).prod()
+
     n_years = len(returns) / 252
+    if n_years == 0:
+        return 0.0
+
+    compounded_growth = (1 + returns).prod()
+
+    if not pd.isfinite(compounded_growth):
+        return 0.0
+
     return compounded_growth ** (1 / n_years) - 1
+
+
 
 def calculate_volatility(returns):
     return returns.std() * (252 ** 0.5)

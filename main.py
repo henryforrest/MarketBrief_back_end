@@ -11,6 +11,8 @@ def get_stock(ticker: str):
         stock_data = fetch_stock_data(ticker)
         ai_summary = generate_ai_summary(ticker, stock_data)
 
+        print(stock_data)
+
         return {
             **stock_data,
             "ai_summary": ai_summary
