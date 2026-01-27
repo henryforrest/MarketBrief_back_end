@@ -1,7 +1,7 @@
 import yfinance as yf
 
 
-def fetch_stock_data(ticker, start_date="2015-01-01"):
+def get_stock_data(ticker, start_date="2015-01-01"):
     ticker = ticker.upper()
     stock = yf.Ticker(ticker)
     df = stock.history(start=start_date)
@@ -9,7 +9,7 @@ def fetch_stock_data(ticker, start_date="2015-01-01"):
     if df.empty:
         raise ValueError(f"No data found for ticker: {ticker}")
 
-    return df.reset_index().to_dict(orient="records")
+    return df
 
 def get_prices(df):
     if "Adj Close" in df.columns:
