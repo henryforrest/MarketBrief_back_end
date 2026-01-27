@@ -8,15 +8,25 @@ load_dotenv(BASE_DIR / ".env")
 
 HF_TOKEN = os.environ["HF_TOKEN"]
 
-def generate_ai_summary(ticker: str, stock_data: dict) -> str:
-    prompt = f"""
-Give a concise, investor-friendly overview of {ticker}.
-Key data:
-Price: {stock_data['price']}
-Market Cap: {stock_data['market_cap']}
-PE Ratio: {stock_data['pe_ratio']}
-Sector: {stock_data['sector']}
-"""
+def generate_ai_summary(ticker: str, metrics: dict) -> str:
+    prompt = f"""You are an investment analyst. Using ONLY the data below, provide:
+
+                                1) A short summary of the stock: {ticker}
+                                2) 2 interesting observations.
+                                3) A prediction (UP or DOWN) for the next 1–2 weeks.
+                                4) 1–2 reasons for your prediction.
+                                5) 1 risk/uncertainty to watch.
+
+                                DATA:
+                                {metrics}
+
+                                OUTPUT FORMAT:
+                                Summary:
+                                Observations:
+                                Prediction:
+                                Reasons:
+                                Risks:
+                                """
 
     response = requests.post(
         "https://router.huggingface.co/v1/chat/completions",

@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from market_data import fetch_stock_data
 from ai_summary import generate_ai_summary
 
+
 app = FastAPI()
 
 @app.get("/stock/{ticker}")
