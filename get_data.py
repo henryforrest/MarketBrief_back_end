@@ -9,7 +9,7 @@ def fetch_stock_data(ticker, start_date="2015-01-01"):
     if df.empty:
         raise ValueError(f"No data found for ticker: {ticker}")
 
-    return df
+    return df.reset_index().to_dict(orient="records")
 
 def get_prices(df):
     if "Adj Close" in df.columns:
