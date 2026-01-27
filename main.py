@@ -17,4 +17,6 @@ def get_stock(ticker: str):
         }
 
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        print("ERROR:", repr(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
