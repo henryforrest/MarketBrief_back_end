@@ -42,6 +42,7 @@ def generate_ai_summary(ticker: str, metrics: dict) -> str:
         timeout=30
     )
 
-    print("==================================================================================================================== I am here ==========================================================================================================================")
+    print("AI RESPONSE STATUS:", response.status_code)
+    print("AI RESPONSE:", response.json())
 
     return response.json()["choices"][0]["message"]["content"]
