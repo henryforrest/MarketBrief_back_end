@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def calculate_returns(prices):
     if isinstance(prices, pd.DataFrame):
@@ -23,11 +24,11 @@ def calculate_sharpe_ratio(returns, risk_free_rate=0.01):
     if isinstance(std, pd.Series):
         std = std.mean()
 
-    if std == 0 or not pd.isfinite(std):
+    if std == 0 or not np.isfinite(std):
         return 0.0
 
     mean = excess_returns.mean()
-    if not pd.isfinite(mean):
+    if not np.isfinite(mean):
         return 0.0
 
     return (mean / std) * (252 ** 0.5)
