@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from market_data import fetch_stock_data
 from ai_summary import generate_ai_summary
-
+import traceback
 
 app = FastAPI()
 
@@ -18,5 +18,6 @@ def get_stock(ticker: str):
 
     except Exception as e:
         print("ERROR:", repr(e))
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
