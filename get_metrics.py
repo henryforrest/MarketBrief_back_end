@@ -10,9 +10,13 @@ def calculate_returns(prices):
 
 
 def calculate_max_drawdown(prices):
+    if isinstance(prices, pd.DataFrame):
+        prices = prices.iloc[:, 0]   # take the first column
+
     equity = prices / prices.iloc[0]
     drawdown = equity / equity.cummax() - 1
     return drawdown.min()
+
 
 def calculate_sharpe_ratio(returns, risk_free_rate=0.01):
     if isinstance(returns, pd.DataFrame):
@@ -60,12 +64,13 @@ def calculate_volatility(returns):
 
 def calculate_all_metrics(prices, returns):
     metrics = {
-        "max_drawdown": calculate_max_drawdown(prices),
-        "sharpe_ratio": calculate_sharpe_ratio(returns),
-        "annualized_return": calculate_annualized_return(returns),
-        "volatility": calculate_volatility(returns),
+        "max_drawdown": float(calculate_max_drawdown(prices)),
+        "sharpe_ratio": float(calculate_sharpe_ratio(returns)),
+        "annualized_return": float(calculate_annualized_return(returns)),
+        "volatility": float(calculate_volatility(returns)),
     }
     return metrics
+
 
 
 
