@@ -15,7 +15,7 @@ def fetch_stock_data(ticker: str):
     metrics = calculate_all_metrics(prices, returns)
     summary = get_company_summary(ticker)
 
-    if not info or "shortName" not in info:
+    if info is None or "shortName" not in info:
         raise ValueError("Invalid ticker")
 
     return {
