@@ -48,7 +48,7 @@ def calculate_annualized_return(returns):
 
     compounded_growth = (1 + returns).prod()
 
-    if not pd.isfinite(compounded_growth):
+    if not np.isfinite(compounded_growth):
         return 0.0
 
     return compounded_growth ** (1 / n_years) - 1
